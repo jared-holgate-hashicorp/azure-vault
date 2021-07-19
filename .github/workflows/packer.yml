@@ -35,7 +35,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          arguments: "-on-error=abort"
+          arguments: "-on-error=abort -var-file=variables.pkrvars.hcl"
           target: ./packer/vault_vm.pkr.hcl
         env:
           PACKER_LOG: 1
