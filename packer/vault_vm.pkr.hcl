@@ -103,8 +103,7 @@ build {
 
   provisioner "shell" {
     execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
-    inline          = 
-    [ 
+    inline          = [ 
       "DEBIAN_FRONTEND=noninteractive apt-get -y upgrade", 
       "echo \"deb https://packages.microsoft.com/repos/azure-cli/ wheezy main\" | sudo tee /etc/apt/sources.list.d/azure-cli.list", 
       "apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893", 
