@@ -28,7 +28,7 @@ jobs:
           draft: false
           prerelease: false
           
-  build:
+  build_vault:
     name: Build VM Image for Vault
     runs-on: ubuntu-latest
 
@@ -58,5 +58,38 @@ jobs:
           command: build
           arguments: "-on-error=abort -var-file=variables.pkrvars.hcl -force"
           target: ./packer/vault_vm.pkr.hcl
+        env:
+          PACKER_LOG: 1
+
+  build_consul:
+    name: Build VM Image for Consul
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: ./packer/consul_vm.pkr.hcl
+
+      - name: Set Variables
+        run: |
+          echo 'client_id="${{ secrets.BUILD_ARM_CLIENT_ID }}"' >> variables.pkrvars.hcl
+          echo 'client_secret="${{ secrets.BUILD_ARM_CLIENT_SECRET }}"' >> variables.pkrvars.hcl
+          echo 'subscription_id="${{ secrets.BUILD_ARM_SUBSCRIPTION_ID }}"' >> variables.pkrvars.hcl
+          echo 'tenant_id="${{ secrets.BUILD_ARM_TENANT_ID }}"' >> variables.pkrvars.hcl
+          echo 'resource_group_name="azure-vault-build"' >> variables.pkrvars.hcl
+          echo 'image_version="1.0.${{ github.run_number }}"' >> variables.pkrvars.hcl          
+          echo '' >> variables.pkrvars.hcl
+
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-on-error=abort -var-file=variables.pkrvars.hcl -force"
+          target: ./packer/consul_vm.pkr.hcl
         env:
           PACKER_LOG: 1
