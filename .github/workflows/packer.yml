@@ -29,6 +29,7 @@ jobs:
           prerelease: false
           
   build:
+    name: Build VM Image for Vault
     runs-on: ubuntu-latest
 
     steps:
