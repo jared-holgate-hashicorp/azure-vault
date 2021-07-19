@@ -9,6 +9,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 1.0.${{ github.run_number }}
+          release_name: 1.0.${{ github.run_number }}
+          body: |
+            CI Release for 1.0.${{ github.run_number }}
+          draft: false
+          prerelease: false
+          
   build:
     runs-on: ubuntu-latest
 
@@ -29,6 +48,7 @@ jobs:
           echo 'subscription_id="${{ secrets.BUILD_ARM_SUBSCRIPTION_ID }}"' >> variables.pkrvars.hcl
           echo 'tenant_id="${{ secrets.BUILD_ARM_TENANT_ID }}"' >> variables.pkrvars.hcl
           echo 'resource_group_name="azure-vault-build"' >> variables.pkrvars.hcl
+          echo 'image_version="1.0.${{ github.run_number }}"' >> variables.pkrvars.hcl          
           echo '' >> variables.pkrvars.hcl
 
       - name: Build Artifact
