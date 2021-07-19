@@ -10,7 +10,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./Terraform
+    working-directory: ./terraform
 
 jobs:
   pull-request-checks:
