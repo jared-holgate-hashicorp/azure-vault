@@ -1,0 +1,174 @@
+name: "Terraform Deploy"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./terraform
+
+jobs:
+  pull-request-checks:
+    name: "Pull Request Checks"
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    environment: test
+    env:
+      ENVIRONMENT: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Dynamically set RUN_DATE environment variable
+        run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          
+      - name: Terraform Workspace
+        id: workspace
+        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+
+      #- name: Terraform Format
+      #  id: fmt
+      #  run: terraform fmt -check
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
+      - name: Terraform Varaibles
+        id: variables
+        run: | 
+          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'subscription_tag="group"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+        
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+    
+  deploy-to-test:
+    name: "Deploy to Test"
+    runs-on: ubuntu-latest
+    environment: test
+    if: github.ref == 'refs/heads/main'
+    env:
+      ENVIRONMENT: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Dynamically set RUN_DATE environment variable
+        run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          
+      - name: Terraform Workspace
+        id: workspace
+        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
+      - name: Terraform Varaibles
+        id: variables
+        run: | 
+          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'subscription_tag="group"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+      
+  deploy-to-acpt:
+    name: "Deploy to Acceptance"
+    runs-on: ubuntu-latest
+    environment: acpt
+    if: github.ref == 'refs/heads/main'
+    needs: deploy-to-test
+    env:
+      ENVIRONMENT: acpt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Dynamically set RUN_DATE environment variable
+        run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          
+      - name: Terraform Workspace
+        id: workspace
+        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
+      - name: Terraform Varaibles
+        id: variables
+        run: | 
+          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'subscription_tag="group"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+  deploy-to-prod:
+    name: "Deploy to Production"
+    runs-on: ubuntu-latest
+    environment: prod
+    if: github.ref == 'refs/heads/main'
+    needs: deploy-to-acpt
+    env:
+      ENVIRONMENT: prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Dynamically set RUN_DATE environment variable
+        run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          
+      - name: Terraform Workspace
+        id: workspace
+        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
+      - name: Terraform Varaibles
+        id: variables
+        run: | 
+          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'subscription_tag="group"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+      - name: Terraform Apply
+        run: terraform apply
