@@ -42,7 +42,7 @@ source "azure-arm" "consul-ubuntu-1804" {
   image_offer                       = "UbuntuServer"
   image_publisher                   = "Canonical"
   image_sku                         = "18.04-LTS"
-  managed_image_name                = "consul-ubuntu-1804_temp"
+  managed_image_name                = "consul-ubuntu-1804_${var.image_version}"
   managed_image_resource_group_name = "${var.resource_group_name}"
   location                          = "${var.location}"
   os_type                           = "Linux"
