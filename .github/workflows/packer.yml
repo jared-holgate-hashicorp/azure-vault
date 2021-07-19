@@ -22,11 +22,20 @@ jobs:
           arguments: -syntax-only
           target: ./packer/vault_vm.pkr.hcl
 
+      - name: Set Variables
+        run: |
+          echo 'client_id="${{ secrets.BUILD_ARM_CLIENT_ID }}"' >> variables.pkrvars.hcl
+          echo 'client_secret="${{ secrets.BUILD_ARM_CLIENT_SECRET }}"' >> variables.pkrvars.hcl
+          echo 'subscription_id="${{ secrets.BUILD_ARM_SUBSCRIPTION_ID }}"' >> variables.pkrvars.hcl
+          echo 'tenant_id="${{ secrets.BUILD_ARM_TENANT_ID }}"' >> variables.pkrvars.hcl
+          echo 'resource_group_name="azure-vault-build"' >> variables.pkrvars.hcl
+          echo '' >> variables.pkrvars.hcl
+
       - name: Build Artifact
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          arguments: "-color=false -on-error=abort"
+          arguments: "-on-error=abort -var-file=variables.pkrvars.hcl"
           target: ./packer/vault_vm.pkr.hcl
         env:
           PACKER_LOG: 1
