@@ -202,7 +202,7 @@ resource "azurerm_linux_virtual_machine" "vault" {
   }
 }
 
-ouput "ssh_key" {
+output "ssh_key" {
     value = tls_private_key.vault.public_key_openssh
     sensitive = true
 }
