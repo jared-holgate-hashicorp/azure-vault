@@ -3,10 +3,11 @@ name: "Terraform Deploy"
 on:
   push:
     branches: [ main ]
-    paths: [ 'packer/**', '.github/workflows/terraform.yml' ]
+    paths: [ 'terraform/**', '.github/workflows/terraform.yml' ]
   pull_request:
     branches: [ main ]
-    paths: [ 'packer/**', '.github/workflows/terraform.yml' ]
+    paths: [ 'terraform/**', '.github/workflows/terraform.yml' ]
+  workflow_dispatch:
 
 defaults:
   run:
