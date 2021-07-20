@@ -38,6 +38,6 @@ module "stack_azure_hashicorp_vault" {
 }
 
 output "ssh_key" {
-    value = module.stack_azure_vault.ssh_key
+    value = module.stack_azure_hashicorp_vault.ssh_key
     sensitive = true
 }
