@@ -3,8 +3,10 @@ name: Packer
 on:
   push:
     branches: [ main ]
+    paths: [ 'packer/**' ]
   pull_request:
     branches: [ main ]
+    paths: [ 'packer/**' ]
 
   workflow_dispatch:
 
