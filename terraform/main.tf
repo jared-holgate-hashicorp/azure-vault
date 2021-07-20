@@ -33,7 +33,7 @@ variable "vault_virtual_machine_prefix" {
 
 terraform {
     required_providers {
-        azurerm {
+        azurerm = {
             source = "hashicorp/azurerm"
         }
     }
