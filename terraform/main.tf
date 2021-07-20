@@ -31,10 +31,14 @@ terraform {
     }
 }
 
+provider "azurerm" {
+    features {}
+}
+
 module "stack_azure_hashicorp_vault" {
     source  = "app.terraform.io/jared-holgate-hashicorp/stack_azure_hashicorp_vault/jaredholgate"
     environment = var.deployment_environment
-    resource_group_name = format("%s-%s", var.resource_group_name_prefix)
+    resource_group_name = format("%s-%s", var.resource_group_name_prefix, var.deployment_environment)
 }
 
 output "ssh_key" {
