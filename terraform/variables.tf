@@ -13,3 +13,8 @@ variable "deployment_version" {
 variable "deployment_date" {
     type = string
 }
+
+variable "client_secret_for_unseal" {
+  type = string
+  sensitive = true
+}
