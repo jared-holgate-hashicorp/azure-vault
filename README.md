@@ -1,8 +1,12 @@
 # Example Vault deployment on Azure, using Packer and Terraform
 
+This example uses a terraform module to deploy a HashiCorp Vault cluster on IaaS into Microsoft Azure. The Vault cluster is backed by a HashiCorp Consul cluster. The virtual machines are deployed from templates that have been defined and built by HashiCorp Packer.
+
+The demo itself uses GitHub Actions and Terraform Cloud to deploy the terraform.
+
 ## Demo steps
 
-1. RDP onto Demo
+1. RDP onto Demo VM
 2. Save the SSH key into c:\users\adminuser\adminuser.pem
 3. Open an SSH session to one of the Vault VM's
 ```
@@ -13,14 +17,12 @@ ssh -i adminuser.pem adminuser@10.1.1.10
 export VAULT_ADDR=http://127.0.0.1:8200
 consul members
 consul operator raft list-peers
-
 vault status
 ```
 5. Demonstrate getting a dynamic SP cred from Azure.
 ```
-vault login token=s.gYURuvmbnQjpCyUPFh3F7q4l
-
-
+export VAULT_ADDR=http://127.0.0.1:8200
+vault login token=s.5Hvaif4yMYVwAxXRs8BLsHUo
 
 vault write azure/roles/my-role ttl=1h azure_roles=-<<EOF
     [
