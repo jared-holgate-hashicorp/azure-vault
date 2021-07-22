@@ -75,11 +75,11 @@ build {
       "curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -", 
       "sudo apt-add-repository \"deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main\"",
       "sudo apt-get update",
-      "sudo apt-get install vault",
+      "sudo apt-get install vault -y",
 
-      "sudo apt-get install consul",
+      "sudo apt-get install consul -y",
 
-      "sudo apt-get install jq"
+      "sudo apt-get install jq -y"
     ]
     inline_shebang  = "/bin/sh -x"
   }
