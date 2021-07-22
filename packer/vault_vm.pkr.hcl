@@ -78,6 +78,8 @@ build {
       "sudo apt-get install vault",
 
       "sudo apt-get install consul"
+
+      "sudo apt-get install jq"
     ]
     inline_shebang  = "/bin/sh -x"
   }

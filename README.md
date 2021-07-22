@@ -15,12 +15,10 @@ consul members
 consul operator raft list-peers
 
 vault status
-vault operator raft list-peers
 ```
 5. Demonstrate getting a dynamic SP cred from Azure.
 ```
-cat /opt/vault/init.log
-vault login token=
+vault login token=s.gYURuvmbnQjpCyUPFh3F7q4l
 
 vault secrets enable azure 
 
