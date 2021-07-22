@@ -1,4 +1,4 @@
-name: "Terraform Deploy"
+name: "Terraform Deploy Vault Cluster"
 
 on:
   push:
@@ -45,7 +45,7 @@ jobs:
         id: init
         run: terraform init
         
-      - name: Terraform Varaibles
+      - name: Terraform Variables
         id: variables
         run: | 
           echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
@@ -85,7 +85,7 @@ jobs:
         id: init
         run: terraform init
         
-      - name: Terraform Varaibles
+      - name: Terraform Variables
         id: variables
         run: | 
           echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
@@ -124,7 +124,7 @@ jobs:
         id: init
         run: terraform init
         
-      - name: Terraform Varaibles
+      - name: Terraform Variables
         id: variables
         run: | 
           echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
@@ -163,13 +163,13 @@ jobs:
         id: init
         run: terraform init
         
-      - name: Terraform Varaibles
+      - name: Terraform Variables
         id: variables
         run: | 
-          echo 'application_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="1.0.0.0"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="1.0.0.${{ github.run_number }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'subscription_tag="group"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'resource_group_name_prefix="azure-vault-"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
       - name: Terraform Apply
         run: terraform apply
