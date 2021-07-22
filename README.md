@@ -20,11 +20,7 @@ vault status
 ```
 vault login token=s.gYURuvmbnQjpCyUPFh3F7q4l
 
-vault secrets enable azure 
 
-vault write azure/config \
-  subscription_id=${subscription_id} \
-  tenant_id="${tenant_id}"
 
 vault write azure/roles/my-role ttl=1h azure_roles=-<<EOF
     [

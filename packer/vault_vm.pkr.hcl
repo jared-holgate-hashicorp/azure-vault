@@ -77,7 +77,7 @@ build {
       "sudo apt-get update",
       "sudo apt-get install vault",
 
-      "sudo apt-get install consul"
+      "sudo apt-get install consul",
 
       "sudo apt-get install jq"
     ]
