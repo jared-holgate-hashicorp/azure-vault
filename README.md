@@ -49,7 +49,7 @@ vault read azure/creds/my-role
 
 ## References
 
-https://learn.hashicorp.com/tutorials/vault/ha-with-consul
-https://learn.hashicorp.com/tutorials/vault/autounseal-azure-keyvault?in=vault/auto-unseal
-https://github.com/hashicorp/vault-guides/blob/master/operations/azure-keyvault-unseal/setup.tpl
-https://www.vaultproject.io/docs/secrets/azure
+- https://learn.hashicorp.com/tutorials/vault/ha-with-consul
+- https://learn.hashicorp.com/tutorials/vault/autounseal-azure-keyvault?in=vault/auto-unseal
+- https://github.com/hashicorp/vault-guides/blob/master/operations/azure-keyvault-unseal/setup.tpl
+- https://www.vaultproject.io/docs/secrets/azure
