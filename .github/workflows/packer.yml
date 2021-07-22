@@ -3,10 +3,10 @@ name: Packer Build VM Templates
 on:
   push:
     branches: [ main ]
-    paths: [ 'packer/**' ]
+    paths: [ 'packer/**', '.github/workflows/packer.yml' ]
   pull_request:
     branches: [ main ]
-    paths: [ 'packer/**' ]
+    paths: [ 'packer/**', '.github/workflows/packer.yml' ]
 
   workflow_dispatch:
 
