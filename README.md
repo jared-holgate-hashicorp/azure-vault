@@ -1,4 +1,4 @@
-# Example Vault deployment on Azure, using Packer and Terraform
+# Example HashiCorp Vault cluster deployment, backed by HashiCorp Consul onto Microsoft Azure, using HashiCorp Packer and HashiCorp Terraform
 
 This example uses a terraform module to deploy a HashiCorp Vault cluster on IaaS into Microsoft Azure. The Vault cluster is backed by a HashiCorp Consul cluster. The virtual machines are deployed from templates that have been defined and built by HashiCorp Packer.
 
