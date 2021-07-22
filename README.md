@@ -13,12 +13,21 @@ ssh -i adminuser.pem adminuser@10.1.1.10
 export VAULT_ADDR=http://127.0.0.1:8200
 consul members
 consul operator raft list-peers
+
 vault status
+vault operator raft list-peers
 ```
 5. Demonstrate getting a dynamic SP cred from Azure.
 ```
 cat /opt/vault/init.log
 vault login token=
+
+vault secrets enable azure 
+
+vault write azure/config \
+  subscription_id=${subscription_id} \
+  tenant_id="${tenant_id}"
+
 vault write azure/roles/my-role ttl=1h azure_roles=-<<EOF
     [
         {
@@ -29,6 +38,10 @@ vault write azure/roles/my-role ttl=1h azure_roles=-<<EOF
 EOF
 
 vault read azure/creds/my-role
+```
+6. Show the cloud_init logs
+```
+cat /var/log/cloud-init-output.log
 ```
 
 ## References
