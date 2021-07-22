@@ -7,19 +7,28 @@ The demo itself uses GitHub Actions and Terraform Cloud to deploy the terraform.
 ## Demo steps
 
 1. RDP onto Demo VM
+
 2. Save the SSH key into c:\users\adminuser\adminuser.pem
+
 3. Open an SSH session to one of the Vault VM's
 ```
 ssh -i adminuser.pem adminuser@10.1.1.10
 ```
-4. Run these commands to show the Consul Cluster and the Vault status;
+
+4. Show the cloud_init logs
+```
+cat /var/log/cloud-init-output.log
+```
+
+5. Run these commands to show the Consul Cluster and the Vault status;
 ```
 export VAULT_ADDR=http://127.0.0.1:8200
 consul members
 consul operator raft list-peers
 vault status
 ```
-5. Demonstrate getting a dynamic SP cred from Azure.
+
+6. Demonstrate getting a dynamic SP cred from Azure.
 ```
 export VAULT_ADDR=http://127.0.0.1:8200
 vault login token=s.5Hvaif4yMYVwAxXRs8BLsHUo
@@ -35,10 +44,8 @@ EOF
 
 vault read azure/creds/my-role
 ```
-6. Show the cloud_init logs
-```
-cat /var/log/cloud-init-output.log
-```
+
+
 
 ## References
 
