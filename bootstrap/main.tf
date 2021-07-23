@@ -121,14 +121,9 @@ resource "tfe_variable" "skip_provider_registration" {
   sensitive = false
 }
 
-
-data "github_repository" "repo" {
-  full_name = "jared-holgate-hashicorp/azure-vault"
-}
-
 resource "github_repository_environment" "repo_environment" {
   for_each = { for env in local.environments : env => env }  
-  repository       = data.github_repository.repo
+  repository       = "jared-holgate-hashicorp/azure-vault"
   environment      = each.value
 
   dynamic "reviewers" {
@@ -141,7 +136,7 @@ resource "github_repository_environment" "repo_environment" {
 
 resource "github_actions_environment_secret" "test_secret" {
   for_each = { for env in local.environments : env => env } 
-  repository       = data.github_repository.repo
+  repository       = "jared-holgate-hashicorp/azure-vault"
   environment      = github_repository_environment.repo_environment[each.value].environment
   secret_name      = "TF_API_TOKEN"
   plaintext_value  = tfe_team_token.jfh[each.value].token
