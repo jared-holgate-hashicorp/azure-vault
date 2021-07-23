@@ -25,27 +25,23 @@ provider "tfe" {
 
 locals {
     environments = [ "temp", "acpt", "prod" ]
+    organization = "jared-holgate-hashicorp"
 }
 
 data "azurerm_client_config" "current" {
 }
 
-resource "tfe_organization" "jfh" {
-  name  = "jared-holgate-hashicorp"
-  email = "jaredfholgate@gmail.com"
-}
-
 resource "tfe_workspace" "jfh" {
   for_each = { for env in local.environments : env => env }
   name         = "azure-vault-${each.value}"
-  organization = tfe_organization.jfh.id
+  organization = local.organization
   description  = "Demonstration HashiCorp Vault on Azure ${each.value}"
 }
 
 resource "tfe_team" "jfh" {
   for_each = { for env in local.environments : env => env }
   name         = "azure-vault-${each.value}"
-  organization = tfe_organization.jfh.id
+  organization = local.organization
 }
 
 resource "tfe_team_access" "jfh" {
