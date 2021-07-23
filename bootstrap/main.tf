@@ -93,7 +93,7 @@ resource "tfe_variable" "client_id" {
 
 resource "tfe_variable" "tenant_id" {
   for_each     = { for env in local.environments : env => env }
-  key          = "ARM_TENTANT_ID"
+  key          = "ARM_TENANT_ID"
   value        = data.azurerm_client_config.current.tenant_id
   category     = "env"
   workspace_id = tfe_workspace.jfh[each.value].id
