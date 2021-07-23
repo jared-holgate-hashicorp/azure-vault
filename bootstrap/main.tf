@@ -114,7 +114,7 @@ resource "tfe_variable" "subscription_id" {
 resource "tfe_variable" "client_secret_for_unseal" {
   for_each     = { for env in local.environments : env => env }
   key          = "TF_VAR_client_secret_for_unseal"
-  value        = azuread_service_principal_password.jfh.value
+  value        = azuread_service_principal_password.jfh[each.value].value
   category     = "env"
   workspace_id = tfe_workspace.jfh[each.value].id
   description  = "The Azure Client Secret required for unsealing Vault"
