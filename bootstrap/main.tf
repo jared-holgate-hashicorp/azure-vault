@@ -6,6 +6,7 @@ terraform {
         tfe = {
         }
         github = {
+            source = "integrations/github"
         }
     }
 
@@ -129,7 +130,7 @@ resource "github_repository_environment" "repo_environment" {
   dynamic "reviewers" {
       for_each = each.value == "test" ? {} : { reviewer = "jaredfholgate" } 
       content {
-          users = [ reviewers.reviewer ]
+          users = [ reviewers.value.reviewer ]
       }
   }
 }
