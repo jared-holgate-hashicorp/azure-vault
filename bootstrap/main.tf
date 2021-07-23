@@ -130,7 +130,7 @@ resource "github_repository_environment" "repo_environment" {
   dynamic "reviewers" {
       for_each = each.value == "test" ? {} : { reviewer = "jaredfholgate" } 
       content {
-          users = [ reviewers.value.reviewer ]
+          users = [ reviewers.value ]
       }
   }
 }
