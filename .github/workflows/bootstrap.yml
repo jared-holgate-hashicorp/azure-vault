@@ -40,9 +40,7 @@ jobs:
       - name: Terraform Variables
         id: variables
         run: | 
-          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_version="1.0.0.${{ github.run_number }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
-          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          
       - name: Terraform Apply
         run: terraform apply
