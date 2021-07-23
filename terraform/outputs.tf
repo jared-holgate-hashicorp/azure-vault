@@ -1,5 +1,5 @@
 output "ssh_key" {
-    value = module.stack_azure_hashicorp_vault.ssh_key
+  value = module.stack_azure_hashicorp_vault.ssh_key
 }
 
 output "demo_password" {

@@ -1,20 +1,20 @@
 variable "resource_group_name_prefix" {
-    type = string
+  type = string
 }
 
 variable "deployment_environment" {
-    type = string
+  type = string
 }
 
 variable "deployment_version" {
-    type = string
+  type = string
 }
 
 variable "deployment_date" {
-    type = string
+  type = string
 }
 
 variable "client_secret_for_unseal" {
-  type = string
+  type      = string
   sensitive = true
 }
