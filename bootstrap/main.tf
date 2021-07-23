@@ -74,7 +74,7 @@ resource "tfe_team_token" "jfh" {
 resource "tfe_variable" "client_secret" {
   for_each = { for env in local.environments : env => env }  
   key          = "ARM_CLIENT_SECRET"
-  value        = azuread_service_principal_password.jfh.value
+  value        = azuread_service_principal_password.jfh[each.value].value
   category     = "env"
   workspace_id = tfe_workspace.jfh[each.value].id
   description  = "The Azure Service Principal Client Secret"
@@ -84,7 +84,7 @@ resource "tfe_variable" "client_secret" {
 resource "tfe_variable" "client_id" {
   for_each = { for env in local.environments : env => env }  
   key          = "ARM_CLIENT_ID"
-  value        = azuread_application.jfh.application_id
+  value        = azuread_application.jfh[each.value].application_id
   category     = "env"
   workspace_id = tfe_workspace.jfh[each.value].id
   description  = "The Azure Service Principal Client Id"
