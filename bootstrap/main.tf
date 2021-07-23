@@ -5,6 +5,8 @@ terraform {
         }
         tfe = {
         }
+        github = {
+        }
     }
 
     backend "remote" {
@@ -23,8 +25,11 @@ provider "azurerm" {
 provider "tfe" {
 }
 
+provider "github" {
+}
+
 locals {
-    environments = [ "temp", "acpt", "prod" ]
+    environments = [ "test", "acpt", "prod" ]
     organization = "jared-holgate-hashicorp"
 }
 
@@ -116,8 +121,28 @@ resource "tfe_variable" "skip_provider_registration" {
   sensitive = false
 }
 
-output "tf_team_tokens" {
-  value = toset([
-    for tt in tfe_team_token.jfh : nonsensitive(tt.token)
-  ])
+
+data "github_repository" "repo" {
+  full_name = "jared-holgate-hashicorp/azure-vault"
+}
+
+resource "github_repository_environment" "repo_environment" {
+  for_each = { for env in local.environments : env => env }  
+  repository       = data.github_repository.repo
+  environment      = each.value
+
+  dynamic "reviewers" {
+      for_each = each.value == "test" ? {} : { reviewer = "jaredfholgate" } 
+      content {
+          users = [ reviewers.reviewer ]
+      }
+  }
+}
+
+resource "github_actions_environment_secret" "test_secret" {
+  for_each = { for env in local.environments : env => env } 
+  repository       = data.github_repository.repo
+  environment      = github_repository_environment.repo_environment[each.value].environment
+  secret_name      = "TF_API_TOKEN"
+  plaintext_value  = tfe_team_token.jfh[each.value].token
 }
