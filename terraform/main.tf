@@ -24,8 +24,6 @@ module "stack_azure_hashicorp_vault" {
     client_secret_for_unseal = var.client_secret_for_unseal
     tags = {
         environment = var.deployment_environment
-        version = var.deployment_version
-        date-deployed = var.deployment_date
         application-name = "Vault demonstration"
         owner = "Jared Holgate"
     }
