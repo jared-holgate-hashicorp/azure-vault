@@ -24,7 +24,7 @@ provider "tfe" {
 }
 
 locals {
-    environments = [ "test", "acpt", "prod" ]
+    environments = [ "temp", "acpt", "prod" ]
 }
 
 data "azurerm_client_config" "current" {
