@@ -121,5 +121,7 @@ resource "tfe_variable" "skip_provider_registration" {
 }
 
 output "tf_team_tokens" {
-  value = tfe_team_token.jfh.*.token
+  value = toset([
+    for tt in tfe_team_token.jfh : tt.token
+  ])
 }
