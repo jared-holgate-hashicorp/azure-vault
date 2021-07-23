@@ -1,0 +1,52 @@
+name: "Terraform Bootstrap Azure and Terraform Cloud"
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'bootstrap/**', '.github/workflows/bootstrap.yml' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'bootstrap/**', '.github/workflows/bootstrap.yml' ]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./bootstrap
+
+jobs:
+  deploy-bootstrap:
+    name: "Deploy Bootstrap"
+    runs-on: ubuntu-latest
+    environment: bootstrap
+    if: github.ref == 'refs/heads/main'
+    env:
+      ENVIRONMENT: bootstrap
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Dynamically set RUN_DATE environment variable
+        run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          
+      - name: Terraform Workspace
+        id: workspace
+        run: echo "TF_WORKSPACE=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
+      - name: Terraform Variables
+        id: variables
+        run: | 
+          echo 'deployment_environment="${{ env.ENVIRONMENT }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_version="1.0.0.${{ github.run_number }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo 'deployment_date="${{ env.RUN_DATE }}"' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+          echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
+      - name: Terraform Apply
+        run: terraform apply
