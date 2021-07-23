@@ -176,9 +176,6 @@ resource "azuread_service_principal_password" "jfh" {
   service_principal_id = azuread_service_principal.jfh[each.value].object_id
 }
 
-data "azurerm_client_config" "current" {
-}
-
 data "azurerm_subscription" "current" {
 }
 
