@@ -11,7 +11,7 @@ terraform {
         organization = "jared-holgate-hashicorp"
 
         workspaces {
-            prefix = "bootstrap-"
+            name = "bootstrap"
         }
     }
 }
