@@ -14,8 +14,8 @@ defaults:
     working-directory: ./bootstrap
 
 jobs:
-  deploy-to-prod:
-    name: "Deploy to Production"
+  deploy-bootstrap:
+    name: "Deploy Bootstrap"
     runs-on: ubuntu-latest
     environment: bootstrap
     if: github.ref == 'refs/heads/main'
