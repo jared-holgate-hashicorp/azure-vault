@@ -23,7 +23,7 @@ provider "azurerm" {
 provider "tfe" {
 }
 
-local {
+locals {
     environments = [ "test", "acpt", "prod" ]
 }
 
