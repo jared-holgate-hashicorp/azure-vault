@@ -122,6 +122,10 @@ resource "tfe_variable" "skip_provider_registration" {
   sensitive = false
 }
 
+data "github_user" "current" {
+  username = ""
+}
+
 resource "github_repository_environment" "repo_environment" {
   for_each = { for env in local.environments : env => env }  
   repository       = "jared-holgate-hashicorp/azure-vault"
@@ -130,7 +134,7 @@ resource "github_repository_environment" "repo_environment" {
   dynamic "reviewers" {
       for_each = each.value == "test" ? {} : { reviewer = "jaredfholgate" } 
       content {
-          users = [ reviewers.value ]
+          users = [ data.github_user.current.node_id ]
       }
   }
 }
