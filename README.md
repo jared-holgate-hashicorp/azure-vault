@@ -1,5 +1,7 @@
 # Example: HashiCorp Vault cluster deployment onto Microsoft Azure IaaS, backed by HashiCorp Consul and using HashiCorp Packer and HashiCorp Terraform
 
+Use Case: "Use Packer to build Azure Virtual Machine templates for Vault backed by Consul. Deploy the virtual machines and associated networking to Azure via Terraform Cloud, using Terraform modules backed by GitHub. Use GitHub Actions to trigger the pipelines and promote to Test, Acceptance and Production environments. Demo the deployed Vault instance generating an on demand Azure Service Principal credential via a Managed Identity."
+
 This example uses a terraform module to deploy a HashiCorp Vault cluster on IaaS into Microsoft Azure. The Vault cluster is backed by a HashiCorp Consul cluster. The virtual machines are deployed from templates that have been defined and built by HashiCorp Packer.
 
 The demo itself uses GitHub Actions and Terraform Cloud to deploy the terraform.
