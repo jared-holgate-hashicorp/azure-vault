@@ -6,13 +6,13 @@ The demo itself uses GitHub Actions and Terraform Cloud to deploy the terraform.
 
 ## What does the example consist of?
 
-### azure-vault
+### Main Repository: Azure Vault
 
 https://github.com/jared-holgate-hashicorp/azure-vault
 
 This is the main repository, it contains these folders;
 
-#### bootstrap
+#### Folder: bootstrap
 
 This folder contains the terraform that sets up environment accross GitHub, Terraform Cloud and Microsoft Azure ready to deploy to. It performs the following steps;
 
@@ -25,7 +25,7 @@ This folder contains the terraform that sets up environment accross GitHub, Terr
 
 This pipeline just need to be run once for the initial setup.
 
-#### packer
+#### Folder: packer
 
 This folder contains the Packer HCL configuration for the Consul and Vault VM's. They perform the following steps;
 
@@ -34,11 +34,11 @@ This folder contains the Packer HCL configuration for the Consul and Vault VM's.
 
 These installs significantly decrease the time taken to deploy and configure the VM's at later stages.
 
-#### terraform
+#### Folder: terraform
 
 This folder contains the terraform that actually deploys the Consul and Vault clusters along with Networking and Key Vault. It uses a terraform module defined in the https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-stack_azure_hashicorp_vault repository to achieve this.
 
-#### .github/workflows
+#### Folder: .github/workflows
 
 This folder contains the GitHub Actions definitions. There is one for each of the folders mentioned above;
 
