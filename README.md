@@ -4,6 +4,47 @@ This example uses a terraform module to deploy a HashiCorp Vault cluster on IaaS
 
 The demo itself uses GitHub Actions and Terraform Cloud to deploy the terraform.
 
+## What does the example consist of?
+
+### https://github.com/jared-holgate-hashicorp/azure-vault
+
+This is the main repository, it contains these folders;
+
+#### bootstrap
+
+This folder contains the terraform that sets up environment accross GitHub, Terraform Cloud and Microsoft Azure ready to deploy to. It performs the following steps;
+
+1. Creates test, acpt and prod workspaces in Terraform Cloud.
+2. Creates test, acpt and prod Resource Groups in Azure.
+3. Creates test, acpt and prod Service Principals in Azure and assingns the relevant permissions to each resource group.
+4. Creates the variables in Terraform Cloud using the credetnaisl of the Azure Service Principals.
+5. Creates test, actp and prod Teams in Terraform Cloud and assigns write permissions on the respective workspace.
+6. Creates test, acpt and prod environments for this reposiory in GitHub and adds the relevant Terraform Cloud Team API token and approvals.
+
+This pipeline just need to be run once for the initial setup.
+
+#### packer
+
+This folder contains the Packer HCL configuration for the Consul and Vault VM's. They perform the following steps;
+
+1. Install Consul onto the Consul VM.
+2. Install Consul and Vault onto the Vault VM.
+
+These installs significantly decrease the time taken to deploy and configure the VM's at later stages.
+
+#### terraform
+
+This folder contains the terraform that actually deploys the Consul and Vault clusters along with Networking and Key Vault. It uses a terraform module defined in the https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-stack_azure_hashicorp_vault repository to achieve this.
+
+#### .github/workflows
+
+This folder contains the GitHub Actions definitions. There is one for each of the folders mentioned above;
+
+1. packer.yaml uses the https://github.com/marketplace/actions/packer-github-actions steps to vailidate and build the Packer templates, pushing them to the Azure Shared Image Gallery.
+2. 
+
+
+
 ## Demo steps
 
 1. RDP onto Demo VM
@@ -45,11 +86,7 @@ EOF
 vault read azure/creds/my-role
 ```
 
-
-
-## References
-
-- https://learn.hashicorp.com/tutorials/vault/ha-with-consul
-- https://learn.hashicorp.com/tutorials/vault/autounseal-azure-keyvault?in=vault/auto-unseal
-- https://github.com/hashicorp/vault-guides/blob/master/operations/azure-keyvault-unseal/setup.tpl
-- https://www.vaultproject.io/docs/secrets/azure
+7. Show the Vault UI working.
+```
+https://10.1.1.11:8200/ui
+```
