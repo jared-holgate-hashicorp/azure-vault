@@ -6,7 +6,9 @@ The demo itself uses GitHub Actions and Terraform Cloud to deploy the terraform.
 
 ## What does the example consist of?
 
-### https://github.com/jared-holgate-hashicorp/azure-vault
+### azure-vault
+
+https://github.com/jared-holgate-hashicorp/azure-vault
 
 This is the main repository, it contains these folders;
 
@@ -44,7 +46,9 @@ This folder contains the GitHub Actions definitions. There is one for each of th
 2. bootstrap.yml uses the https://github.com/marketplace/actions/hashicorp-setup-terraform to set terrafrom, connect to Terraform Cloud and run the terraform apply.
 3. terraform.yml uses the https://github.com/marketplace/actions/hashicorp-setup-terraform to set terrafrom, connect to Terraform Cloud and run the terraform plan for pull requests, then terraform apply for test, acceptance and production environments.
 
-### https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-stack_azure_hashicorp_vault
+### Terraform Module: Stack Azure HashiCorp Vault
+
+https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-stack_azure_hashicorp_vault
 
 This repository contains a terrform module to deploy and configure the Vault and Consul cluster. It performs the following steps;
 
@@ -57,15 +61,21 @@ This repository contains a terrform module to deploy and configure the Vault and
 7. Uses Cloud_Init to configure the Vault VM's with Consul Agents and Vault Servers. The first server to run will successfully call ```vault operator init``` and get the root token. It then uses the root token to login to Vault and configure Azure secret management.
 8. Configures permissions on the Managed Identities to allow them to create Service Principals and Assign Permissions to the Subscription.
 
-### https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-resource_azure_ad_role_assignment
+### Terraform Module: Resource Azure AD Role Assignment
+
+https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-resource_azure_ad_role_assignment
 
 This is a small helper module used to assign AzureAD roles to AzureAD accounts. It uses a null_resource and a bash script to call the Azure Graph API. This functionality is not currently part of any existing terrform provider, hence the need for the custom module.
 
-### https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-resource_windows_virtual_machine
+### Terraform Module: Resource Azure Windows Virtual Machine
+
+https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-resource_windows_virtual_machine
 
 This module creates an Azure Virtual Machine with a Windows image and a public IP. The prupose of this module is purely reuse and to reduce the verbosity of the Stack module.
 
-### https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-resource_linux_virtual_machine
+### Terraform Module: Resource Azure Linux Virtual Machine 
+
+https://github.com/jared-holgate-hashicorp/terraform-jaredholgate-resource_linux_virtual_machine
 
 This module creates an Azure Virtual Machine with a Windows image and a static private IP. The prupose of this module is purely reuse and to reduce the verbosity of the Stack module.
 
