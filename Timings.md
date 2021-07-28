@@ -1,0 +1,21 @@
+- 0m (1m)  - Kick off Packer Build [19m]: https://github.com/jared-holgate-hashicorp/azure-vault/actions/workflows/packer.yml
+- 1m (10m) - Run through slides up to demo page
+- 11m (1m) - Kick off Bootstrap Deploy [3m]: https://github.com/jared-holgate-hashicorp/azure-vault/actions/workflows/bootstrap.yml
+- 12m (3m) - Describe what bootstrap is doing
+  - TF Cloud Workspaces / Teams / Variables
+  - GitHub Environments
+  - Azure Resource Groups / SP's
+- 15m (1m) - Kick off Vault Deploy via CI Change [5m]: https://github.com/jared-holgate-hashicorp/azure-vault/actions/workflows/terraform.yml
+  - Update version to 1.0.37
+- 15m (5m) - Describe what Packer is doing
+  - Install Consul and Vault
+  - Deploy image to Shared Image Gallery
+- 20m (5m) - Describe what Vault Deploy is doing
+  - Key Vault
+  - VNET
+  - VM's from packer image
+  - Cloud_Init - Bash Scripts
+  - Permissions for MSI
+- 25m (2m) - Show Vault Resource Group and Network Diagram
+- 27m (5m) - RDP and follow demo steps here: https://github.com/jared-holgate-hashicorp/azure-vault/blob/main/README.md#demo-steps
+- 32m (5m) - Go back to presentation and complete last slides
