@@ -118,5 +118,5 @@ vault read azure/creds/my-role
 
 7. Show the Vault UI working.
 ```
-https://10.1.1.11:8200/ui
+https://10.1.1.10:8200/ui
 ```
