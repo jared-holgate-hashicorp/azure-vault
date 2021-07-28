@@ -24,6 +24,8 @@ module "stack_azure_hashicorp_vault" {
   client_secret_for_unseal     = var.client_secret_for_unseal
   consul_cluster_image_version = "1.0.36"
   vault_cluster_image_version  = "1.0.36"
+  consul_cluster_size          = 3
+  vault_cluster_size           = 3
   tags = {
     environment      = var.deployment_environment
     application-name = "Vault demonstration"
