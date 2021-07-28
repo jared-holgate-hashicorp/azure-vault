@@ -95,7 +95,6 @@ cat /var/log/cloud-init-output.log
 
 5. Run these commands to show the Consul Cluster and the Vault status;
 ```
-export VAULT_ADDR=http://127.0.0.1:8200
 consul members
 consul operator raft list-peers
 vault status
@@ -103,7 +102,6 @@ vault status
 
 6. Demonstrate getting a dynamic SP cred from Azure.
 ```
-export VAULT_ADDR=http://127.0.0.1:8200
 vault login [Replace Me]
 
 vault write azure/roles/my-role ttl=1h azure_roles=-<<EOF
@@ -120,5 +118,5 @@ vault read azure/creds/my-role
 
 7. Show the Vault UI working.
 ```
-https://10.1.1.11:8200/ui
+https://10.1.1.10:8200/ui
 ```

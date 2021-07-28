@@ -43,4 +43,4 @@ jobs:
           echo '' >> ${{ env.ENVIRONMENT }}.auto.tfvars
           
       - name: Terraform Apply
-        run: terraform apply
+        run: terraform apply --auto-approve
