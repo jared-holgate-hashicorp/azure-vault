@@ -1,7 +1,3 @@
-variable "client_secret_for_role" {
-  type = string
-}
-
 terraform {
   required_providers {
     azurerm = {
